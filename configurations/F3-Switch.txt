@@ -1,11 +1,11 @@
 ! F3-Switch - Third Floor Switch
 ! Enterprise Multi-Floor Network Project
-! Documented from show running-config output.
-! Port security currently configured on Fa0/2.
-
+! Configuration verified using show running-config
+! Test-PC connected to Fa0/2
+!
 version 15.0
 no service timestamps log datetime msec
-no service timestamps log datetime msec
+no service timestamps debug datetime msec
 no service password-encryption
 !
 hostname Switch
