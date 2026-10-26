@@ -1,0 +1,100 @@
+! F2-Router - Sanitized Running Configuration
+! Enterprise Multi-Floor Network Project
+! Plaintext credentials and device serial number omitted.
+
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname F2-Router
+!
+ip dhcp pool Finance
+ network 192.168.5.0 255.255.255.0
+ default-router 192.168.5.100
+ dns-server 192.168.5.101
+!
+ip dhcp pool HR
+ network 192.168.4.0 255.255.255.0
+ default-router 192.168.4.100
+ dns-server 192.168.4.101
+!
+ip dhcp pool Sales
+ network 192.168.3.0 255.255.255.0
+ default-router 192.168.3.100
+ dns-server 192.168.3.101
+!
+ip dhcp excluded-address 192.168.3.100 192.168.3.101
+ip dhcp excluded-address 192.168.4.100 192.168.4.101
+ip dhcp excluded-address 192.168.5.100 192.168.5.101
+!
+no ip cef
+no ipv6 cef
+!
+! Local username credentials omitted.
+ip domain-name Gova
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.3.100 255.255.255.0
+!
+interface GigabitEthernet0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.4.100 255.255.255.0
+!
+interface GigabitEthernet0/0.50
+ encapsulation dot1Q 50
+ ip address 192.168.5.100 255.255.255.0
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/3/0
+ ip address 10.10.10.2 255.255.255.252
+!
+interface Serial0/3/1
+ ip address 10.10.10.10 255.255.255.252
+ clock rate 64000
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 10
+ log-adjacency-changes
+ network 10.10.10.0 0.0.0.3 area 0
+ network 10.10.10.8 0.0.0.3 area 0
+ network 192.168.3.0 0.0.0.255 area 0
+ network 192.168.4.0 0.0.0.255 area 0
+ network 192.168.5.0 0.0.0.255 area 0
+!
+ip classless
+ip flow-export version 9
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+!
+line vty 5 15
+ login local
+ transport input ssh
+!
+end
